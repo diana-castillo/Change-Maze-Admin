@@ -96,6 +96,34 @@
             </tbody>
           </table>
         </div>
+
+        <div>
+          <h6 class="text-center">Resultados</h6>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered text-center" id="table_modal_resultados">
+            <thead>
+              <tr>
+                <th>Búsqueda de rutina</th>
+                <th>Reacción emocional</th>
+                <th>Enfoque a corto plazo</th>
+                <th>Rigidez cognitiva</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+				<div>
+          <h6 class="text-center">Perfil de resistencia al cambio</h6>
+        </div>
+        <div style="padding: 0px 10px 0px 10px;">
+					<p align="justify" id="perfil_resultado">
+					</p>
+        </div>
+
       </div>
     </div>
   </div>
@@ -179,6 +207,70 @@ $(document).on("click", ".btnInfoJugador", function(){
             partInSeconds = partInSeconds.toString().padStart(2,'0');
             row.insertCell(7).innerHTML = `${hours}:${minutes}:${partInSeconds}`;
           } 
+        }
+    });
+
+		var datos = new FormData();
+  	datos.append("idResultadosJugador", idInfoJugador);
+
+		$.ajax({
+        url:"./ajax/jugadores.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(respuesta){
+          const table_res = document.getElementById('table_modal_resultados');
+          for (var i = table_res.rows.length - 1; i > 0; i--)
+						table_res.deleteRow(i);
+
+					let row = table_res.insertRow(1);
+
+          var busqueda_rutina = parseFloat(respuesta["busqueda_rutina"]);
+          var reaccion_emocional = parseFloat(respuesta["reaccion_emocional"]);
+          var enfoque_corto_plazo = parseFloat(respuesta["enfoque_corto_plazo"]);
+          var rigidez_cognitiva = parseFloat(respuesta["rigidez_cognitiva"]);
+
+					row.insertCell(0).innerHTML = busqueda_rutina;
+					row.insertCell(1).innerHTML = reaccion_emocional;
+					row.insertCell(2).innerHTML = enfoque_corto_plazo;
+					row.insertCell(3).innerHTML = rigidez_cognitiva;
+
+          //Texto
+          const div_perfil = document.getElementById('perfil_resultado');
+          div_perfil.innerHTML = "";
+          var texto = "";
+
+          var flexibilidad_cambio = (busqueda_rutina + reaccion_emocional + enfoque_corto_plazo + (1 - rigidez_cognitiva)) / 4;
+
+          if (flexibilidad_cambio > 0.5)
+            texto = texto + "Tu enfoque general hacia el cambio tiende a ser positivo. Por lo general, te gustan los cambios y tiendes a buscarlos. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es dinámico y relativamente impredecible. ";
+          else
+            texto = texto + "Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible. ";
+
+          if (busqueda_rutina > 0.5)
+            texto = texto + "En cuanto a tu enfoque hacia las rutinas, te gusta experimentar cosas nuevas, generalmente disfrutas de las sorpresas y te aburres cada vez que se forma una rutina en tu vida. ";
+          else
+            texto = texto + "En cuanto a tu enfoque hacia las rutinas, ganas comodidad y disfrutas haciendo las mismas cosas a la misma hora, no te gustan particularmente las sorpresas y te sientes incómodo cuando algo se interpone en tu rutina diaria. ";
+
+          if (reaccion_emocional > 0.5)
+            texto = texto + "No tiendes a tener reacciones emocionales negativas a los cambios. No te hacen sentir particularmente incómodo y cuando ocurren mantienes la compostura. ";
+          else
+            texto = texto + "Tu reacción emocional a los cambios es generalmente negativa. Los cambios a menudo te hacen sentir incómodo, nervioso e incluso estresado. ";
+
+          if (enfoque_corto_plazo > 0.5)
+            texto = texto + "Tiendes a centrarte en las implicaciones del cambio a largo plazo. No te molestan demasiado los inconvenientes a corto plazo que a menudo implican los cambios y no permitirás que interfieran con tu toma de decisiones. ";
+          else
+            texto = texto + "Te enfocas en los ajustes que los cambios a menudo requieren. Incluso cuando sabes que el cambio puede beneficiarte, no puedes evitar molestarte con los inconvenientes a corto plazo involucrados. ";
+
+          if (rigidez_cognitiva > 0.5)
+            texto = texto + "Pareces ser muy estable y consistente en tus opiniones. Sabes en lo que crees y no es muy probable que cambies de opinión.";
+          else
+            texto = texto + "Pareces ser bastante flexible en tu forma de pensar. Por lo general, tienes la mente abierta y estás dispuesto a reconsiderar tus puntos de vista.";
+
+          div_perfil.innerHTML = texto;
         }
     });
 })

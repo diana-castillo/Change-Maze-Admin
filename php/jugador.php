@@ -31,6 +31,29 @@ class Jugador{
         }catch(Exception $e){}
     }
 
+    static public function jugadorMostrarResultados($id) {
+        try{
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM resultados WHERE id_jugador = :id_jugador");
+            $stmt->bindParam(":id_jugador", $id, PDO::PARAM_INT);
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){} 
+    }
+
+    static public function avg_jugadores($campos){
+        try{
+            $sql = "SELECT ";
+            foreach ($campos as $c) { $sql .= $c.","; }
+            $sql = substr($sql, 0, -1);
+            $sql .= " FROM resultados";
+            $stmt = Conexion::conectar()->prepare($sql);
+            $stmt -> execute();
+            if(count($campos) != 1) return $stmt -> fetchAll(PDO::FETCH_NUM);
+            else return $stmt -> fetchAll(PDO::FETCH_COLUMN, 0);
+
+        }catch(Exception $e){} 
+    }
+
     static public function eliminarJugador($ruta) {
         if(isset($_GET['idJugador'])){
             try{

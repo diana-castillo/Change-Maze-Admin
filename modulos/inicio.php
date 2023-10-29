@@ -25,6 +25,9 @@
 
   $jugador = new Jugador();
 
+  $campos = array("busqueda_rutina", "reaccion_emocional", "enfoque_corto_plazo", "rigidez_cognitiva");
+  $avg_jugadores = $jugador -> avg_jugadores($campos); //Resultados de todos los jugadores
+
   $estudiantes = $jugador -> contarJugadores('ESTUDIANTE') -> cantidad;
   $profesionistas = $jugador -> contarJugadores('PROFESIONISTA') -> cantidad;
 
@@ -41,6 +44,30 @@
   $entre41y45 = $jugador -> contarEdades(41,45) -> cantidad;
   $mayorA45 = $jugador -> contarEdades(45,99) -> cantidad;
 ?>
+
+<div class="container mt-5">
+
+    <div class="card-deck mb-5 mt-5">
+
+        <div class="card mb-4 box-shadow">
+
+            <div class="card-header">
+                <h6 class="text-center">Total de muestras</h6>
+            </div>
+            
+            <div class="card-body p-5">
+
+              <div class="card chart-container">
+                <canvas id="scatterChart"></canvas>
+              </div>
+
+            </div>
+        
+        </div>
+    
+    </div>
+        
+</div>
 
 <div class="container mt-5">
 
@@ -116,6 +143,77 @@
 
 
 <script>
+  // Para gráfica de dispersión
+  async function testPCA(avg_jugadores) {
+      let WCluster = window['w-cluster'];
+      let resultado = await WCluster.PCA(avg_jugadores, { nCompNIPALS: 2 });
+      return resultado;
+  }
+
+  let avg_jugadores = <?php echo json_encode($avg_jugadores); ?>;
+  var avg_float = [];
+  var tmp = [];
+
+  // Convertir datos a flotantes
+  for (let i = 0; i < avg_jugadores.length; i++) {
+      for (let j = 0; j < 4; j++)
+          tmp.push(parseFloat(avg_jugadores[i][j]));
+
+      avg_float.push(tmp);
+      tmp = [];
+  }
+  
+  testPCA(avg_float).then(resultado => { 
+      var datasets = [[],[]]; // [[grupo1],[grupo2]]
+      var grupo = []; // Lista de grupo de cada jugador. 1 = resistente; 0 = no resistente
+
+      // Sacar promedio de c/u y meter grupo en lista
+      for(let i = 0; i < avg_float.length; i++) {
+          var promedio = (avg_float[i][0] + avg_float[i][1] + avg_float[i][2] + (1 - avg_float[i][3])) / 4;
+          if (promedio > 0.5)
+              grupo.push(0);
+          else
+              grupo.push(1);
+      }
+
+      // Guardar datos de los grupos en datasets
+      for (let i = 0; i < resultado.length; i++) { 
+          if (grupo[i] == 0)
+              datasets[0].push({ x: resultado[i][0] , y: resultado[i][1] }); // no resistentes
+          else
+              datasets[1].push({ x: resultado[i][0] , y: resultado[i][1] }); // resistentes
+      }
+
+      var ctx = document.getElementById("scatterChart").getContext("2d");
+      var myScatter = Chart.Scatter(ctx, {
+      data: {
+          datasets: [{
+              label: "Jugadores no resistentes al cambio",
+              borderColor: '#FF6384',
+              backgroundColor: '#FF638480',
+              data: datasets[0]
+          }, {
+              label: "Jugadores resistentes al cambio",
+              borderColor: '#36A2EB',
+              backgroundColor: '#36A2EB80',
+              data: datasets[1]
+          }
+      ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        showLines: false,
+        elements: {
+            point: {
+                radius: 5
+            }
+        }
+      }
+      });
+      
+  });
+
   // Gráfica de barras
   var barCanvas = document.getElementById("barChart");
 
