@@ -190,12 +190,12 @@
           datasets: [{
               label: "Jugadores no resistentes al cambio",
               borderColor: '#FF6384',
-              backgroundColor: '#FF638480',
+              backgroundColor: 'FF638480',
               data: datasets[0]
           }, {
               label: "Jugadores resistentes al cambio",
               borderColor: '#36A2EB',
-              backgroundColor: '#36A2EB80',
+              backgroundColor: '36A2EB80',
               data: datasets[1]
           }
       ]
