@@ -243,30 +243,45 @@ $(document).on("click", ".btnInfoJugador", function(){
           div_perfil.innerHTML = "";
           var texto = "";
 
-          var flexibilidad_cambio = (busqueda_rutina + reaccion_emocional + enfoque_corto_plazo + (1 - rigidez_cognitiva)) / 4;
+          var valor_br = (busqueda_rutina > 0.5) ? 1 : -1;
+          var valor_re = (reaccion_emocional > 0.5) ? 1 : -1;
+          var valor_ecp = (enfoque_corto_plazo > 0.5) ? 1 : -1;
+          var valor_rc = (rigidez_cognitiva > 0.5) ? -1 : 1;
 
-          if (flexibilidad_cambio > 0.5)
+          var flexibilidad_cambio = valor_br + valor_re + valor_ecp + valor_rc; // < 0 no flexible, > 0 flexible
+
+          if (flexibilidad_cambio > 0)
             texto = texto + "Tu enfoque general hacia el cambio tiende a ser positivo. Por lo general, te gustan los cambios y tiendes a buscarlos. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es dinámico y relativamente impredecible. ";
+          else if (flexibilidad_cambio == 0)
+            texto = texto + "Tu calificación total de resistencia al cambio es aproximadamente promedio. Ves tanto las ventajas como las desventajas en los cambios y no sueles estar inclinado a resistirlos o promoverlos. ";
           else
             texto = texto + "Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible. ";
 
-          if (busqueda_rutina > 0.5)
+          if (busqueda_rutina > 0.6)
             texto = texto + "En cuanto a tu enfoque hacia las rutinas, te gusta experimentar cosas nuevas, generalmente disfrutas de las sorpresas y te aburres cada vez que se forma una rutina en tu vida. ";
+          else if (busqueda_rutina >= 0.4 && busqueda_rutina <= 0.6)
+            texto = texto + "En cuanto a tu enfoque hacia las rutinas, no pareces sentirte muy fuerte acerca de ellas. Hay cosas que te gusta hacer de forma regular, pero en ocasiones te gusta romper tus rutinas y hacer algo inesperado o no planificado. ";
           else
             texto = texto + "En cuanto a tu enfoque hacia las rutinas, ganas comodidad y disfrutas haciendo las mismas cosas a la misma hora, no te gustan particularmente las sorpresas y te sientes incómodo cuando algo se interpone en tu rutina diaria. ";
 
-          if (reaccion_emocional > 0.5)
+          if (reaccion_emocional > 0.6)
             texto = texto + "No tiendes a tener reacciones emocionales negativas a los cambios. No te hacen sentir particularmente incómodo y cuando ocurren mantienes la compostura. ";
+          else if (reaccion_emocional >= 0.4 && reaccion_emocional <= 0.6)
+            texto = texto + "Tu reacción emocional a los cambios es leve. No te sientes demasiado estresado en su presencia, pero no eres del todo indiferente a ellos. ";
           else
             texto = texto + "Tu reacción emocional a los cambios es generalmente negativa. Los cambios a menudo te hacen sentir incómodo, nervioso e incluso estresado. ";
 
-          if (enfoque_corto_plazo > 0.5)
+          if (enfoque_corto_plazo > 0.6)
             texto = texto + "Tiendes a centrarte en las implicaciones del cambio a largo plazo. No te molestan demasiado los inconvenientes a corto plazo que a menudo implican los cambios y no permitirás que interfieran con tu toma de decisiones. ";
+          else if (enfoque_corto_plazo >= 0.4 && enfoque_corto_plazo <= 0.6)
+            texto = texto + "Aunque eres consciente de los inconvenientes del cambio a corto plazo, aún puedes ver los beneficios potenciales a largo plazo y, por lo tanto, puedes tenerlos en cuenta al tomar decisiones sobre el cambio. ";
           else
             texto = texto + "Te enfocas en los ajustes que los cambios a menudo requieren. Incluso cuando sabes que el cambio puede beneficiarte, no puedes evitar molestarte con los inconvenientes a corto plazo involucrados. ";
 
-          if (rigidez_cognitiva > 0.5)
+          if (rigidez_cognitiva > 0.6)
             texto = texto + "Pareces ser muy estable y consistente en tus opiniones. Sabes en lo que crees y no es muy probable que cambies de opinión.";
+          else if (rigidez_cognitiva >= 0.4 && rigidez_cognitiva <= 0.6)
+            texto = texto + "A pesar de que tus creencias son relativamente consistentes a lo largo del tiempo, aún puede cambiar ocasionalmente tu forma de ver las cosas.";
           else
             texto = texto + "Pareces ser bastante flexible en tu forma de pensar. Por lo general, tienes la mente abierta y estás dispuesto a reconsiderar tus puntos de vista.";
 

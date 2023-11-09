@@ -167,10 +167,16 @@
       var datasets = [[],[]]; // [[grupo1],[grupo2]]
       var grupo = []; // Lista de grupo de cada jugador. 1 = resistente; 0 = no resistente
 
-      // Sacar promedio de c/u y meter grupo en lista
+      // Sacar resistencia de c/u y meter grupo en lista
       for(let i = 0; i < avg_float.length; i++) {
-          var promedio = (avg_float[i][0] + avg_float[i][1] + avg_float[i][2] + (1 - avg_float[i][3])) / 4;
-          if (promedio > 0.5)
+          var valor_br = (avg_float[i][0] > 0.5) ? 1 : -1;
+          var valor_re = (avg_float[i][1] > 0.5) ? 1 : -1;
+          var valor_ecp = (avg_float[i][2] > 0.5) ? 1 : -1;
+          var valor_rc = (avg_float[i][3] > 0.5) ? -1 : 1;
+
+          var flexibilidad_cambio = valor_br + valor_re + valor_ecp + valor_rc; // < 0 no flexible, > 0 flexible
+
+          if (flexibilidad_cambio > 0)
               grupo.push(0);
           else
               grupo.push(1);
