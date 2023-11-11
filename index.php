@@ -15,37 +15,37 @@
     <!-- Agregar todos las bibliotecas necesitadas -->
 
      <!-- jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="libs/js/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap v5.1.3 CDNs -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="libs/css/bootstrap/bootstrap.min.css"/>
+    <script src="libs/js/bootstrap/bootstrap.bundle.min.js"></script>
 
     <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css"/>
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css"/>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="libs/css/datatables/jquery.dataTables.css"/>
+    <link rel="stylesheet" href="libs/css/datatables/responsive.bootstrap.min.css"/>
+    <script src="libs/js/datatables/jquery.dataTables.js"></script>
+    <script src="libs/js/datatables/dataTables.responsive.min.js"></script>
+    <script src="libs/js/datatables/responsive.bootstrap.min.js"></script>
     <!-- DataTables export data -->
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css">
+    <script src="libs/js/datatables_export/dataTables.buttons.min.js"></script>
+    <script src="libs/js/datatables_export/jszip.min.js"></script>
+    <script src="libs/js/datatables_export/buttons.html5.min.js"></script>
+    <script src="libs/js/datatables_export/buttons.print.min.js"></script>
+    <link rel="stylesheet" href="libs/css/datatables_export/buttons.dataTables.min.css"/>
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"/>
 
     <!-- Chart.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="libs/js/chartjs/chart.min.js"></script>
 
     <!-- w cluster -->
     <!-- https://www.npmjs.com/package/w-cluster -->
-    <script src="https://cdn.jsdelivr.net/npm/w-cluster@1.0.17/dist/w-cluster.umd.js"></script>
+    <script src="libs/js/w-cluster/w-cluster.umd.js"></script>
 
     <!-- Sweet Alert 2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="libs/js/sweetalert2/sweetalert2.js"></script>
 
     <script src="modulos/funciones.js"></script>
 
